@@ -27,3 +27,34 @@ sum' (x:xs) = x + sum' xs
 capital :: String -> String
 capital "" = "Empty String, whoops!"
 capital whole@(x:xs) = "The first letter of " ++ whole ++ " is " ++ [x]
+
+-- guards
+bmiTell :: (RealFloat a) => a -> a -> String
+bmiTell weight height
+    | bmi <= skinny = "You're underweight, you emo, you!"
+    | bmi <= normal = "You're supposedly normal, but I bet you're ugly!"
+    | bmi <= fat = "Yuo're fat. Lose some weight fatty!"
+    | otherwise = "You're a whale. Congratulations!"
+    where bmi = weight / height^2
+          (skinny, normal, fat) = (18.5, 25.0, 20.0)
+
+max' :: (Ord a) => a -> a -> a
+max' a b
+    | a > b = a
+    | otherwise = b
+
+myCompare :: (Ord a) => a -> a -> Ordering
+myCompare a b
+    | a == b = EQ
+    | a > b = GT
+    | otherwise = LT
+
+initials :: String -> String -> String
+initials firstName lastName = [f] ++ ". " ++ [l] ++ ". "
+    where (f:_) = firstName
+          (l:_) = lastName
+
+calcBmis :: (RealFloat a) => [(a,a)] -> [a]
+calcBmis xs = [bmi x y | (x, y) <- xs]
+    where bmi height weight = height / weight^2
+
