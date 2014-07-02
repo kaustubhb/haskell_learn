@@ -11,9 +11,9 @@ first (a, _, _) = a
 second :: (a,b,c) -> b
 second (_, b, _) = b
 
-head' :: [a] -> a
-head' [] = error "Can't get head of an empty list";
-head' (x:_) = x
+--head' :: [a] -> a
+--head' [] = error "Can't get head of an empty list";
+--head' (x:_) = x
 
 length' :: (Num a) => [b] -> a
 length' [] = 0
@@ -57,4 +57,25 @@ initials firstName lastName = [f] ++ ". " ++ [l] ++ ". "
 calcBmis :: (RealFloat a) => [(a,a)] -> [a]
 calcBmis xs = [bmi x y | (x, y) <- xs]
     where bmi height weight = height / weight^2
+
+-- using let
+cylinder :: (RealFloat a) => a -> a -> a
+cylinder r h =
+    let pii = pi
+        sideArea = 2 * pii * r * h
+        topArea = pii * r^2
+    in sideArea + 2*topArea
+
+calcBmis' :: RealFloat a => [(a,a)] -> [a]
+calcBmis' xs = [ bmi | (w,h) <- xs, let bmi = w/h^2]
+
+head' :: [a] -> a
+head' xs = case xs of [] -> error "Can't take head of an empty list"
+                      (x:_) -> x
+
+describeList :: [a] -> String
+describeList xs = "The list is " ++ 
+    case xs of [] -> "empty."
+               [x] -> "a singleton list."
+               otherwise -> " a long list."
 
