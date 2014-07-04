@@ -20,3 +20,21 @@ reverse' (x:xs) = (reverse' xs) ++ [x]
 
 repeat' :: a -> [a]
 repeat' x = x : repeat' x
+
+zip' :: [a] -> [b] -> [(a,b)]
+zip' [] _ = []
+zip' _ [] = []
+zip' (x:xs) (y:ys) = (x,y) : (zip' xs ys)
+
+elem' :: Eq a => a -> [a] -> Bool
+elem' _ [] = False
+elem' y (x:xs)
+    | y == x = True
+    | otherwise = elem' y xs
+
+qsort :: Ord a => [a] -> [a]
+qsort [] = []
+qsort (x:xs) = let
+      smallerList = [a | a <- xs, a < x]
+      biggerList = [a | a <- xs, a >= x]
+      in (qsort smallerList) ++ [x] ++ (qsort biggerList)
