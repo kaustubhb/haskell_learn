@@ -10,9 +10,9 @@ zipWith' func (x:xs) (y:ys) =
 flip' :: (a -> b -> c) -> b -> a -> c
 flip' f x y = f y x
 
-map' :: (a -> b) -> [a] -> [b]
-map' _ [] = []
-map' f (x:xs) = (f x) : (map' f xs)
+--map' :: (a -> b) -> [a] -> [b]
+--map' _ [] = []
+--map' f (x:xs) = (f x) : (map' f xs)
 
 filter' :: (a -> Bool) -> [a] -> [a]
 filter' _ [] = []
@@ -36,6 +36,23 @@ chain x
     | odd x = x : (chain (3*x + 1))
     | otherwise = x : (chain (x `div` 2))
 
-collatz :: (Integral a) -> a -> Int
+collatz :: (Integral a) => a -> Int
 collatz x = length (filter isLong (map chain [1..x]))
           where isLong xs = (length xs) > 15
+
+-- implement sum'using foldl
+sum' :: (Num a) => [a] -> a
+sum' xs = foldl (+) 0 xs
+
+-- elem using foldl
+elem' :: (Eq a) => a -> [a] -> Bool
+elem' x xs = foldl (\acc y -> if y == x then True else acc) False xs
+
+map' :: (a -> b) -> [a] -> [b]
+map' func xs = foldr (\x acc -> func x : acc) [] xs
+
+maximum' xs = foldr1 (\x acc -> if x > acc then x else acc) xs
+
+reverse' xs = foldl (\acc x -> x:acc) [] xs
+
+product' xs 
