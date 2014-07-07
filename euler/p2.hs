@@ -6,6 +6,9 @@
 --By considering the terms in the Fibonacci sequence whose values do not exceed four million, 
 --find the sum of the even-valued terms.
 
-fibonacci :: (Integral a) => Int -> [a]
-fibonacci n = take n (genSeq 1 2)
+--fibonacci :: (Integral a) =>  [a]
+fibonacci = let acc = 0 in
+            (genSeq 1 2)
     where genSeq x y = x : (genSeq y (x+y))
+
+

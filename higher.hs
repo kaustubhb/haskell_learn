@@ -14,11 +14,11 @@ flip' f x y = f y x
 --map' _ [] = []
 --map' f (x:xs) = (f x) : (map' f xs)
 
-filter' :: (a -> Bool) -> [a] -> [a]
-filter' _ [] = []
-filter' f (x:xs)
-    | f x == True = x:(filter' f xs)
-    | otherwise = filter' f xs
+--filter' :: (a -> Bool) -> [a] -> [a]
+--filter' _ [] = []
+--filter' f (x:xs)
+--    | f x == True = x:(filter' f xs)
+--    | otherwise = filter' f xs
 
 -- largest number under 100,000 divisible by 3289
 largestDivisible :: (Integral a) => a
@@ -55,4 +55,10 @@ maximum' xs = foldr1 (\x acc -> if x > acc then x else acc) xs
 
 reverse' xs = foldl (\acc x -> x:acc) [] xs
 
-product' xs 
+product' xs = foldr1 (\x acc -> x*acc) xs
+
+filter' func xs = foldr (\x acc -> if (func x) then x:acc else acc) [] xs
+
+head' xs = foldl1 (\acc _ -> acc) xs
+
+last' xs = foldl1 (\_ x -> x) xs
