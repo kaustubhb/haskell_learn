@@ -42,3 +42,26 @@ myLength xs = foldl (\acc _ -> acc+1) 0 xs
 
 myReverse :: [a] -> [a]
 myReverse xs = foldl (flip (:)) [] xs
+
+-- p6
+--(*) Find out whether a list is a palindrome. A palindrome can be read forward or backward; e.g. (x a m a x). 
+isPalindrome :: (Eq a) => [a] -> Bool
+isPalindrome xs = xs == myReverse xs
+
+--p7
+--(**) Flatten a nested list structure. 
+-- TODO later with more knowledge
+
+
+
+
+--p8 
+--(**) Eliminate consecutive duplicates of list elements.
+--If a list contains repeated elements they should be replaced with a single copy of the element. 
+--The order of the elements should not be changed. 
+
+compress :: (Eq a) =>  [a] -> [a]
+compress [] = []
+compress xs = foldr (\x acc -> if ((head acc) == x) 
+                                  then acc 
+                                else (x:acc)) [last xs] xs
