@@ -35,9 +35,19 @@ myAny fc (x:xs)
     | (fc x) == True = True
     | otherwise = myAny fc xs
 
--- Not working as of now
 myIterate :: (a -> a) -> a -> [a]
-myIterate fc x = myIterate' fc x []
-  where
-    myIterate' fc y ys = myIterate' fc h (ys ++ [h])
-      where h = (fc y)
+myIterate fc x = x : myIterate fc (fc x)
+
+mySplitAt :: Int -> [a] -> ([a],[a])
+myTake' _ [] = []
+myTake' n (x:xs) = if (n <= 0) then []
+                   else (x:myTake' (n-1) xs)
+myDrop' _ [] = []
+myDrop' n (x:xs) = if (n <= 0) then (x:xs)
+                   else (myDrop' (n-1) xs)
+mySplitAt n xs = ((myTake' n xs), (myDrop' n xs))
+
+myDropWhile :: (a -> Bool) -> [a] -> [a]
+myDropWhile _ [] = []
+myDropWhile fc (x:xs) = if (fc x) then myDropWhile fc xs
+                        else (x:xs)
