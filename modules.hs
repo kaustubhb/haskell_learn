@@ -51,3 +51,26 @@ myDropWhile :: (a -> Bool) -> [a] -> [a]
 myDropWhile _ [] = []
 myDropWhile fc (x:xs) = if (fc x) then myDropWhile fc xs
                         else (x:xs)
+
+myInits :: [a] -> [[a]]
+myInits [] = [[]]
+myInits (x:xs) = [] : (map (x:) $ myInits xs)
+
+myTails :: [a] -> [[a]]
+myTails xs = xs : case xs of
+                    [] -> []
+                    _:xs -> myTails xs
+
+-- searching for a sublist in a list
+search :: (Eq a) => [a] -> [a] -> Bool
+search pattern src = 
+    let len = length pattern
+    in (foldl (\acc x -> if (take len x == pattern) then True
+                         else acc) False (myTails src))
+
+myPartition :: (a -> Bool) -> [a] -> ([a],[a])
+getHalf fc xs = case xs of
+                    [] -> []
+                    (y:ys) -> if (fc y) then (y:getHalf fc ys)
+                             else (getHalf fc ys)
+myPartition fc xs = ((getHalf fc xs), (getHalf (not.fc) xs))
