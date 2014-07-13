@@ -1,4 +1,6 @@
 import Data.List
+import Data.Char
+import Data.Maybe
 
 myNub :: (Eq a) => [a] -> [a]
 myNub [] = []
@@ -74,3 +76,22 @@ getHalf fc xs = case xs of
                     (y:ys) -> if (fc y) then (y:getHalf fc ys)
                              else (getHalf fc ys)
 myPartition fc xs = ((getHalf fc xs), (getHalf (not.fc) xs))
+
+caesarEncode :: String -> Int -> String
+caesarEncode [] _ = []
+caesarEncode str shift = map (chr.(shift+).ord) str
+
+-- Data.Map
+phoneBook =
+  [("betty","555-2938")
+  ,("bonnie","452-2928")
+  ,("patsy","493-2928")
+  ,("lucille","205-2928")
+  ,("wendy","939-8282")
+  ,("penny","853-2492")
+  ]
+
+myFindKey :: (Eq k) => k -> [(k,v)] -> Maybe v
+myFindKey k dict = let tups = filter (\(x,y) -> (x == k)) dict
+                   in if (null tups) then Nothing
+                      else Just (snd (head tups))
