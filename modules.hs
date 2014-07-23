@@ -1,6 +1,7 @@
 import Data.List
 import Data.Char
 import Data.Maybe
+import qualified Data.Map as M
 
 myNub :: (Eq a) => [a] -> [a]
 myNub [] = []
@@ -95,3 +96,9 @@ myFindKey :: (Eq k) => k -> [(k,v)] -> Maybe v
 myFindKey k dict = let tups = filter (\(x,y) -> (x == k)) dict
                    in if (null tups) then Nothing
                       else Just (snd (head tups))
+
+myFromList :: (Ord k) => [(k,v)] -> M.Map k v
+myFromList xs = foldl (\acc (x,y) -> M.insert x y acc) M.empty xs
+
+myKeys :: (Ord k) => M.Map k v -> [k]
+myKeys = (map fst) . M.toList
